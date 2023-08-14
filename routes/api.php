@@ -41,4 +41,10 @@ Route::post('/sanctum/token', function (Request $request) {
 });
 
 // Customer
-Route::apiResource('/customers', CustomerController::class)->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->controller(CustomerController::class)->group(function () {
+    Route::get('/customer/list', 'list');
+    Route::get('/customer/show/{id}', 'show');
+    Route::post('/customer/store', 'store');
+    Route::put('/customer/update/{id}', 'update');
+    Route::delete('/customer/destroy/{id}', 'destroy');
+});

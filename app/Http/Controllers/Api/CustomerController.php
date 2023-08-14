@@ -11,7 +11,7 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function list(): JsonResponse
     {
         //
         return response()
