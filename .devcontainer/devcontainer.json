@@ -1,0 +1,31 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/php
+{
+	"name": "PHP",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/php:1-8.2-bullseye",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [8080],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "sudo chmod a+x \"$(pwd)/public\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)/public\" /var/www/html",
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root",
+
+    "build": 
+    {
+        "dockerfile": "Dockerfile"
+    },
+
+	// https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/setting-up-your-php-project-for-codespaces#step-4-run-your-application
+	// https://containers.dev/implementors/json_schema/
+	"postStartCommand": "sudo sed -i 's/Listen 80$//' /etc/apache2/ports.conf && sudo sed -i 's/<VirtualHost \\*:80>/ServerName 127.0.0.1\\n<VirtualHost \\*:8080>/' /etc/apache2/sites-enabled/000-default.conf && apache2ctl start"
+}

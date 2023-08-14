@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLoginRequest;
-use Illuminate\Http\Response;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -13,7 +16,7 @@ class AuthController extends Controller
      *
      * @return User
      */
-    public function login(UserLoginRequest $request): Response
+    public function login(UserLoginRequest $request): JsonResponse
     {
         try {
             $validateUser = Validator::make($request->all(),
@@ -30,7 +33,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if (! Auth::attempt($request->only(['email', 'password']))) {
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json(
                     [
                         'status' => false,
