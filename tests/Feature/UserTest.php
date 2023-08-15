@@ -8,6 +8,8 @@ use Tests\TestCase;
 
 class UserTest extends TestCase
 {
+    use RefreshDatabase;
+    
     public function get_token_success(): void
     {
         $response = $this->postJson('/api/sanctum/token', [

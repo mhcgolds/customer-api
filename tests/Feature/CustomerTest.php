@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CustomerTest extends TestCase
 {
+    use RefreshDatabase;
+
     private string $token;
 
     private function getToken()
@@ -45,8 +48,8 @@ class CustomerTest extends TestCase
         $this
             ->getHeaders()
             ->postJson('/api/customer/store', [
-                'email' => 'new@example.com',
-                'password' => 'password'
+                'name' => 'Test',
+                'country' => 'Brazil'
             ])
             ->assertOk()
             ->assertJson([
@@ -56,24 +59,27 @@ class CustomerTest extends TestCase
 
     public function test_show(): void
     {
+        $customer = Customer::factory()->create();
+
         $this
             ->getHeaders()
-            ->get('/api/customer/show/1')
+            ->get('/api/customer/show/' . $customer->id)
             ->assertOk()
             ->assertJson([
-                'id' => 1,
-                'name' => 'Customer 1',
-                'email' => 'customer1@example.com',
+                'name' => 'Test',
+                'country' => 'Brazil'
             ]);
     }
 
     public function test_update(): void
     {
+        $customer = Customer::factory()->create();
+
         $this
             ->getHeaders()
-            ->putJson('/api/customer/update/1', [
-                'name' => 'Customer 1',
-                'email' => 'customer1@example.com',
+            ->putJson('/api/customer/update/' . $customer->id, [
+                'name' => 'Test',
+                'country' => 'Brazil'
             ])
             ->assertOk()
             ->assertJson([
@@ -83,9 +89,11 @@ class CustomerTest extends TestCase
 
     public function test_destroy(): void
     {
+        $customer = Customer::factory()->create();
+        
         $this
             ->getHeaders()
-            ->delete('/api/customer/destroy/1')
+            ->delete('/api/customer/destroy/' . $customer->id)
             ->assertOk()
             ->assertJson([
                 'status' => true,

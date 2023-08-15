@@ -5,21 +5,26 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Repositories\CustomerRepository;
 
 class CustomerController extends Controller
 {
+    private CustomerRepository $customerRepository;
+
+    public function __construct(CustomerRepository $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function list(): JsonResponse
     {
-        //
+        $data = $this->customerRepository->list();
+
         return response()
-            ->json([[
-                'id' => 1,
-                'name' => 'Customer 1',
-                'email' => 'customer1@example.com',
-            ]]);
+            ->json($data);
     }
 
     /**
@@ -27,11 +32,12 @@ class CustomerController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        //
+        $result = $this->customerRepository->store($request->all());
+
         return response()
             ->json([
-                'id' => 1,
-                'status' => true,
+                'id' => $result,
+                'status' => ($result !== 0),
                 'errors' => [],
             ]);
     }
@@ -41,13 +47,10 @@ class CustomerController extends Controller
      */
     public function show(string $id): JsonResponse
     {
-        //
+        $result = $this->customerRepository->show($id);
+
         return response()
-            ->json([
-                'id' => 1,
-                'name' => 'Customer 1',
-                'email' => 'customer1@example.com',
-            ]);
+            ->json($result);
     }
 
     /**
@@ -55,11 +58,12 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id): JsonResponse
     {
-        //
+        $result = $this->customerRepository->update($id, $request->all());
+
         return response()
             ->json([
-                'id' => 1,
-                'status' => true,
+                'id' => $id,
+                'status' => $result,
                 'errors' => [],
             ]);
     }
@@ -69,11 +73,12 @@ class CustomerController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-        //
+        $result = $this->customerRepository->destroy($id);
+
         return response()
             ->json([
-                'id' => 1,
-                'status' => true,
+                'id' => $id,
+                'status' => ($result === true), // $result can be true, false or null
                 'errors' => [],
             ]);
     }
