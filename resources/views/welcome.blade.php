@@ -1,36 +1,26 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Marked in the browser</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
 
-        <title>Customer Laravel API</title>
-    </head>
-    <body>
-        <h3>Welcome to Customer Laravel API</h3>
-
-        <p>This is an API created for learning purposes running in Laravel 10 and Postgres 11.</p>
-
-        <p>You can check it's source here <a href="https://github.com/mhcgolds/customer-api">https://github.com/mhcgolds/customer-api</a>.</p>
-
-        <h4>List of public urls: </h4>
-
-        <ul>
-            <li>Auth: 
-                <ul>
-                    <li>
-                        <strong>auth/login</strong> (<em>POST</em>)
-                        <ul>
-                            <li>
-                                <strong>email</strong> (<em>string</em> - required)
-                            </li>
-                            <li>
-                                <strong>password</strong> (<em>string</em> - required)
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </body>
+        li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">{{ $content }}</div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.getElementById('content').innerHTML = marked.parse(document.getElementById('content').innerHTML);
+    </script>
+</body>
 </html>
