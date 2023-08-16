@@ -23,6 +23,20 @@ This is an API created for learning purposes running in Laravel 10 and Postgres 
         - **country** (*string* - required) - Customer's country
     - **customer/destroy/(id)** [*DELETE*] - Delete a specific Customer by Id
 
+3. **Customer Contacts**\*\*:
+    - **customer-contacts/list/(customer_id)** [*GET*] - Gets a list of Customer's Contacts
+    - **customer-contacts/show/(id)** [*GET*] - Get a specific Customer Contact by Id
+    - **customer-contacts/store** [*POST*] - Creates a new Customer Contact
+        - **customer_id** (*int* - required) - Parent Customer's id
+        - **name** (*string* - required) - Customer Contact's name
+        - **email** (*string* - required) - Customer Contact's country
+        - **dob** (*string* - required) - Customer Contact's date of birth
+    - **customer-contacts/update/(id)** [*PUT*] - Updates a  Customer Contact
+        - **customer_id** (*int* - required) - Parent Customer's id
+        - **name** (*string* - required) - Customer Contact's name
+        - **email** (*string* - required) - Customer Contact's country
+        - **dob** (*string* - required) - Customer Contact's date of birth
+    - **customer-contacts/destroy/(id)** [*DELETE*] - Delete a specific Customer Contact by Id
 ---
 
 Made by [Marcio Goldschmidt](https://github.com/mhcgolds/).

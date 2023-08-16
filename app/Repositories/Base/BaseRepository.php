@@ -8,13 +8,15 @@ class BaseRepository
 {
     protected Model $model;
 
-    public function list(): array
+    public function list(array $where = []): array
     {
-        return [[
-            'id' => 1,
-            'name' => 'Customer 1',
-            'email' => 'customer1@example.com',
-        ]];
+        $query = $this->model->query();
+
+        foreach ($where as $key => $value) {
+            $query->where($key, $value);
+        }
+
+        return $query->get()->toArray();
     }
 
     public function store(array $data): int

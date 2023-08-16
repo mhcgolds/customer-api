@@ -12,6 +12,7 @@ class CustomerContacts extends Model
     use HasFactory;
 
     protected $fillable = [
+        'customer_id',
         'name',
         'email',
         'dob'

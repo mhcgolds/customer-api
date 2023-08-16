@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\BaseTestCase;
 
-class CustomerTest extends BaseTestCase
+class CustomerContactsTest extends BaseTestCase
 {
     use RefreshDatabase;
     
@@ -14,7 +14,7 @@ class CustomerTest extends BaseTestCase
     {
         $this
             ->setupSanctum()
-            ->get('/api/customer/list')
+            ->get('/api/customer-contacts/list/1')
             ->assertOk();
     }
 
@@ -22,9 +22,11 @@ class CustomerTest extends BaseTestCase
     {
         $this
             ->setupSanctum()
-            ->postJson('/api/customer/store', [
-                'name' => 'Test',
-                'country' => 'Brasil'
+            ->postJson('/api/customer-contacts/store', [
+                'customer_id' => 1,
+                'name' => 'Test Contact',
+                'email' => 'contact@example.com',
+                'dob' => '1988-10-27'
             ])
             ->assertOk()
             ->assertJson([
@@ -36,11 +38,13 @@ class CustomerTest extends BaseTestCase
     {
         $this
             ->setupSanctum()
-            ->get('/api/customer/show/1')
+            ->get('/api/customer-contacts/show/1')
             ->assertOk()
             ->assertJson([
-                'name' => 'Test',
-                'country' => 'Brasil'
+                'customer_id' => 1,
+                'name' => 'Test Contact',
+                'email' => 'contact@example.com',
+                'dob' => '1988-10-27'
             ]);
     }
 
@@ -48,9 +52,11 @@ class CustomerTest extends BaseTestCase
     {
         $this
             ->setupSanctum()
-            ->putJson('/api/customer/update/1', [
-                'name' => 'Test',
-                'country' => 'Brasil'
+            ->putJson('/api/customer-contacts/update/1', [
+                'customer_id' => 1,
+                'name' => 'Test Contact',
+                'email' => 'contact@example.com',
+                'dob' => '1988-10-27'
             ])
             ->assertOk()
             ->assertJson([
@@ -62,7 +68,7 @@ class CustomerTest extends BaseTestCase
     {        
         $this
             ->setupSanctum()
-            ->delete('/api/customer/destroy/1')
+            ->delete('/api/customer-contacts/destroy/1')
             ->assertOk()
             ->assertJson([
                 'status' => true,

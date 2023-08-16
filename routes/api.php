@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\CustomerContactsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -47,4 +47,13 @@ Route::middleware('auth:sanctum')->controller(CustomerController::class)->group(
     Route::post('/customer/store', 'store');
     Route::put('/customer/update/{id}', 'update');
     Route::delete('/customer/destroy/{id}', 'destroy');
+});
+
+// CustomerContacts
+Route::middleware('auth:sanctum')->controller(CustomerContactsController::class)->group(function () {
+    Route::get('/customer-contacts/list/{id}', 'list');
+    Route::get('/customer-contacts/show/{id}', 'show');
+    Route::post('/customer-contacts/store', 'store');
+    Route::put('/customer-contacts/update/{id}', 'update');
+    Route::delete('/customer-contacts/destroy/{id}', 'destroy');
 });
